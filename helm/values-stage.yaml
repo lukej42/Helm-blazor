@@ -1,0 +1,40 @@
+environment: stage
+
+replicaCount: 2
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 75
+  targetMemoryUtilizationPercentage: 80
+
+image:
+  repository: lgexample654.azurecr.io/myapp
+  pullPolicy: IfNotPresent
+  tag: "stage"
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+  azure:
+    internal: false
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+topologySpreadConstraints:
+  enabled: true
+  maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: ScheduleAnyway
+  minDomains: 2
+
+podDisruptionBudget:
+  enabled: false

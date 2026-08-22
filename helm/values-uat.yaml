@@ -1,0 +1,41 @@
+environment: uat
+
+replicaCount: 2
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+image:
+  repository: lgexample654.azurecr.io/myapp
+  pullPolicy: IfNotPresent
+  tag: "uat"
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+  azure:
+    internal: false
+
+resources:
+  limits:
+    cpu: 750m
+    memory: 768Mi
+  requests:
+    cpu: 150m
+    memory: 192Mi
+
+topologySpreadConstraints:
+  enabled: true
+  maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: DoNotSchedule
+  minDomains: 2
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
