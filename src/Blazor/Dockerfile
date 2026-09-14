@@ -8,7 +8,7 @@ RUN dotnet restore "./Blazor.csproj"
 RUN dotnet publish "./Blazor.csproj" -c Release -o /app/publish
 
 # Stage 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /app/publish .
 
