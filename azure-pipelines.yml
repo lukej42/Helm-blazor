@@ -23,7 +23,7 @@ variables:
 
   # Shared AKS config
   aksResourceGroup: 'terraform-prod'
-  helmChartPath: 'helm/blazor-app'
+  helmChartPath: 'helm'
   vmImageName: 'ubuntu-latest'
 
 stages:
